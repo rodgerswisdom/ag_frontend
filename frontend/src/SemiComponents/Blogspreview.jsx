@@ -3,6 +3,16 @@ import { Link } from "react-router-dom";
 import axiosInstance from "../axios";
 import Blogscard from "./Blogcard";
 
+function shuffleArray(array) {
+  // Function to shuffle an array using Fisher-Yates algorithm
+  let shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+}
+
 function Blogspreview() {
   const [blogData, setBlogData] = useState([]);
 
@@ -10,7 +20,8 @@ function Blogspreview() {
     axiosInstance.get('/blogs/')
       .then((res) => {
         const blogs = res.data;
-        const onlyTwoBlogs = blogs.slice(0, 2);
+        const shuffledBlogs = shuffleArray(blogs);
+        const onlyTwoBlogs = shuffledBlogs.slice(0, 2);
         setBlogData(onlyTwoBlogs);
       })
       .catch((error) => {
@@ -19,7 +30,7 @@ function Blogspreview() {
   }, []);
 
   return (
-    <div>
+    <div className="border-l-2 border-green-500  pl-6 mr-2">
       <div>
         <p className="text-2xl">Latest Stories</p>
       </div>
@@ -30,6 +41,7 @@ function Blogspreview() {
             title={item.title} // Pass the title as a prop
             content={item.content} // Pass the content as a prop
             image={item.image}
+            author={item.author.first_name}
           />
         ))}
       </div>

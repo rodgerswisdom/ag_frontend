@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosInstance from '../axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -9,9 +9,13 @@ function LoginForm() {
     password: '',
   });
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (values, { setSubmitting }) => {
+    setIsLoading(true); // Set loading to true
+    setError(null); // Reset any previous errors
+
     try {
       const response = await axiosInstance.post('user/accounts/login/', {
         email: values.email,
@@ -32,8 +36,23 @@ function LoginForm() {
       console.error('Login failed', error);
     } finally {
       setSubmitting(false);
+      // Delay for 2 seconds before setting loading to false
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     }
   };
+
+  useEffect(() => {
+    // Clean up the error message after 2 seconds
+    const errorTimeout = setTimeout(() => {
+      setError(null);
+    }, 2000);
+
+    return () => {
+      clearTimeout(errorTimeout);
+    };
+  }, [error]);
 
   return (
     <div className="min-h-screen flex justify-center items-center lg:px-4 sm:px-1">
@@ -119,7 +138,7 @@ function LoginForm() {
                   disabled={isSubmitting}
                   className="w-full p-3 bg-[#23CE6B] text-white font-semibold rounded-lg hover:bg-green-600"
                 >
-                  Login
+                  {isLoading ? 'Please Wait...' : 'Login'}
                 </button>
               </div>
               {error && (

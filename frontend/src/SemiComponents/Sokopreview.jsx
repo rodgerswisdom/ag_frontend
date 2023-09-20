@@ -3,6 +3,17 @@ import Sokocard from "./Sokocard";
 import { Link } from "react-router-dom";
 import axiosInstance from "../axios";
 
+
+function shuffleArray(array) {
+  // Function to shuffle an array using Fisher-Yates algorithm
+  let shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+}
+
 function Sokopreview() {
   const [sokoData, setSokoData] = useState([]);
 
@@ -10,8 +21,8 @@ function Sokopreview() {
     axiosInstance.get('/sokos/')
       .then((res) => {
         const data = res.data;
-        // Assuming you want to display the first two items
-        const firstTwoSokos = data.slice(0, 2);
+        const shuffledSokos = shuffleArray(data);
+        const firstTwoSokos = shuffledSokos.slice(0, 2);
         setSokoData(firstTwoSokos);
       })
       .catch((error) => {
