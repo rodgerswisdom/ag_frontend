@@ -40,14 +40,14 @@ function Homepage() {
         <div className='position-absolute top-0 end-0 h-100 w-50 text-white text-left'>
           
           <div className='flex justify-center items-center h-screen'>
-            <div className='row  backdrop-blur-sm rounded-md p-24'>
+            <div className='row  backdrop-blur-sm rounded-md p-24 sm:p-4'>
             <h1 className='text-center border-b-2 mb-5 pb-3 text-4xl'>AGROGHALA</h1>
             <p className='card-text'>Easily access vital information, seamless rental of storage facilities, and a direct platform to sell your produce in dynamic markets.</p>
             
              {authenticated ? (
-            <div className='flex justify-between items-center mt-8'>
+            <div className='flex justify-between items-center sm:row mt-8 sm:mt-4'>
                <Link to='/soko'>
-               <a class="ghala home-buttons d-flex justify-content-between inline-flex items-center px-3 py-2 text-sm font-medium text-center 
+               <a class="ghala home-buttons flex justify-content-between inline-flex items-center px-3 py-2 text-sm font-medium text-center 
                text-white bg-transparent rounded-full focus:ring-4 border-white border-2 rounded-full
                focus:outline-none focus:ring-green-300 dark:bg-transparent dark:hover:bg-transparent dark:focus:ring-transparent">
                   Soko
@@ -57,7 +57,7 @@ function Homepage() {
               </a>              
               </Link>
               <Link to='/ghalas'>
-              <a class="ghala home-buttons d-flex justify-content-between inline-flex items-center px-3 py-2 text-sm font-medium text-center 
+              <a class="ghala home-buttons flex justify-content-between inline-flex items-center px-3 py-2 sm:my-3 text-sm font-medium text-center 
                text-white bg-transparent rounded-full hover:bg-transparent focus:ring-4 border-white border-2 rounded-full
                focus:outline-none focus:ring-green-300 dark:bg-transparent dark:hover:bg-transparent dark:focus:ring-transparent">
                   Ghalas
@@ -66,7 +66,7 @@ function Homepage() {
                   </svg>
               </a>                     </Link>
               <Link to='/'>
-              <a class="ghala home-buttons d-flex justify-content-between inline-flex items-center px-3 py-2 text-sm font-medium text-center 
+              <a class="ghala home-buttons flex justify-content-between inline-flex items-center px-3 py-2 text-sm font-medium text-center 
                text-white bg-transparent rounded-full hover:bg-transparent focus:ring-4 border-white border-2 rounded-full
                focus:outline-none focus:ring-green-300 dark:bg-transparent dark:hover:bg-transparent dark:focus:ring-transparent">
                   My Products
@@ -86,7 +86,7 @@ function Homepage() {
       
       <div className='bg-green-100 rounded-top-lg py-3'>
       <h1 className="mb-8 text-2xl text-success my-2 mx-5 font-medium"> Featured Blogs </h1>
-      <div className='px-5 grid grid-cols-3 gap-2'>
+      <div className='px-5 grid grid-cols-3 gap-2 sm:row'>
       {/* Render only two blogs */}
       {blogs.slice(0, 3).map(blog => (
           <div key={blog.id} class="max-w-sm w-full lg:max-w-full mb:2 lg:flex">
@@ -108,8 +108,8 @@ function Homepage() {
   </div>
 </div>
       ))}
-    </div>
-    <div className='d-flex justify-content-end px-5'>
+    </div> 
+    <div className='flex justify-content-end px-5'>
       <Link to='/blogs'>
         <a type='button' className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 
         focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 
