@@ -4,21 +4,19 @@ import GhalaModal from "./Ghalacheckout";
 import axiosInstance from "../axios";
 import Dialog from "@mui/material/Dialog";
 
-
 function Ghalasgenerator(props) {
   const [ghala, setGhala] = useState([]);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedGhala, setSelectedGhala] = useState(null);
   const [open, setOpen] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const [selectedGhala, setSelectedGhala] = useState(null);
   const [selectedGhalaPrice, setSelectedGhalaPrice] = useState(0);
 
-  const handleBuyClick = (item) => () => {
-    setSelectedItem(item);
+  const handleBuyClick = (ghala) => () => {
+    setSelectedGhala(ghala); // Set the selected Ghala
     setSelectedUserId(props.userId); // Set the selected user ID
-    setSelectedGhalaPrice(item.start_price); // Set the initial price
+    setSelectedGhalaPrice(ghala.rent_price); // Set the initial price
 
     // Calculate the total price based on initial values
     const initialTotalPrice = totalGhalaPrice({
@@ -33,7 +31,7 @@ function Ghalasgenerator(props) {
 
   const handleCloseModal = () => {
     setOpen(false);
-    setSelectedItem(null);
+    setSelectedGhala(null);
   };
 
   const handleConfirmationClose = () => {
@@ -45,10 +43,11 @@ function Ghalasgenerator(props) {
 
     axiosInstance
       .post("/myghalas/", {
-        user: selectedUserId,
-        ghala: selectedGhala.id, // Assuming you have a property "id" in your Ghala object
-        commodity_stored: selectedItem.commodity,
-        bags_stored: selectedItem.quantity,
+        user: selectedUserId, // Assuming you have the user ID available as a prop
+        ghala: selectedGhala.id, // Use the selected Ghala's ID
+        commodity_stored: props.selectedItem.commodity.id, // Send the commodity ID
+        bags_stored: props.selectedItem.quantity,
+        duration_of_storage: props.selectedGhala.period,
       })
       .then((response) => {
         setLoading(false);
@@ -93,19 +92,21 @@ function Ghalasgenerator(props) {
           phone={item.phone_number}
           open={item.opening_time}
           close={item.closing_time}
-          handleBuyClick={handleBuyClick(item)}
+          handleBuyClick={handleBuyClick(item)} // Pass the Ghala to the click handler
         />
       ))}
-      {selectedItem && (
+      {selectedGhala && (
         <GhalaModal
           open={open}
           handleClose={handleCloseModal}
           handleConfirmationOpen={() => setConfirmationOpen(true)}
           handleConfirmationClose={handleConfirmationClose}
           handleConfirmation={handleConfirmation}
-          ghalatitle={selectedItem.ghala_name}
+          ghalatitle={selectedGhala.ghala_name} // Display the selected Ghala name
           price={selectedGhalaPrice}
           totalGhalaPrice={totalGhalaPrice} // Pass the totalGhalaPrice function
+          selectedGhala={selectedGhala} // Pass the selected Ghala
+          selectedUserId={selectedUserId} // Pass the selected user ID
         />
       )}
       <Dialog

@@ -45,7 +45,7 @@ function Feedback() {
       // Redirect to the homepage after 4 seconds
       setTimeout(() => {
         Navigate('/');
-      }, 4000);
+      });
     }, 2000); // 2 seconds for the simulated delay
 
     
@@ -64,8 +64,8 @@ function Feedback() {
         setIsLoading(false);
         // Clear the form data
         setFormData({
-          email: '',
-          feedback_text: '',
+          email: "",
+          feedback_text: "",
         });
       })
       .catch((error) => {

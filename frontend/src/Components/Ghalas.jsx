@@ -5,7 +5,7 @@ import Blogspreview from "../SemiComponents/Blogspreview";
 import Navbar from "../SemiComponents/Navbar";
 import Footer from "../SemiComponents/Footer";
 
-import MyghalaModal from "../SemiComponents/Myghalamodal";
+import MyghalaModal from "../SemiComponents/MyGhalaLIst";
 function Ghalas() {
   return (
     <div>
